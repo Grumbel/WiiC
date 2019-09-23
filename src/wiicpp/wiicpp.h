@@ -94,7 +94,7 @@ public:
     CNunchukButtons(void *ButtonsPtr, void *ButtonsHeldPtr, void *ButtonsReleasedPtr);
 
 private:
-    short Cast(void *Ptr) {return (short)(*((byte *)(Ptr)));} // Inlined using the different type.
+    short Cast(void *Ptr) {return (short)(*((uint8_t *)(Ptr)));} // Inlined using the different type.
 };
 
 class CClassicButtons : public CButtonBase
