@@ -55,7 +55,7 @@ static void classic_ctrl_pressed_buttons(struct classic_ctrl_t* cc, short now);
  *
  *	@return	Returns 1 if handshake was successful, 0 if not.
  */
-int classic_ctrl_handshake(struct wiimote_t* wm, struct classic_ctrl_t* cc, byte* data, unsigned short len) {
+int classic_ctrl_handshake(struct wiimote_t* wm, struct classic_ctrl_t* cc, uint8_t* data, unsigned short len) {
 	int i;
 	int offset = 0;
 
@@ -82,7 +82,7 @@ int classic_ctrl_handshake(struct wiimote_t* wm, struct classic_ctrl_t* cc, byte
 		 */
 		if (data[offset + 16] == 0xFF) {
 			/* get the calibration data */
-			byte* handshake_buf = malloc(EXP_HANDSHAKE_LEN * sizeof(byte));
+			uint8_t* handshake_buf = malloc(EXP_HANDSHAKE_LEN * sizeof(uint8_t));
 
 			WIIC_DEBUG("Classic controller handshake appears invalid, trying again.");
 			wiic_read_data_cb(wm, handshake_expansion, handshake_buf, WM_EXP_MEM_CALIBR, EXP_HANDSHAKE_LEN);
@@ -132,9 +132,9 @@ void classic_ctrl_disconnected(struct classic_ctrl_t* cc) {
  *	@param cc		A pointer to a classic_ctrl_t structure.
  *	@param msg		The message specified in the event packet.
  */
-void classic_ctrl_event(struct classic_ctrl_t* cc, byte* msg) {
+void classic_ctrl_event(struct classic_ctrl_t* cc, uint8_t* msg) {
 	int i, lx, ly, rx, ry;
-	byte l, r;
+	uint8_t l, r;
 
 	/* decrypt data */
 	for (i = 0; i < 6; ++i)

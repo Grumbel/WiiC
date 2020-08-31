@@ -55,19 +55,19 @@
  *	The handshake will be concluded when the wiimote responds
  *	with this data.
  */
-void wiic_handshake(struct wiimote_t* wm, byte* data, unsigned short len) {
+void wiic_handshake(struct wiimote_t* wm, uint8_t* data, unsigned short len) {
 	if (!wm)	return;
 
 	switch (wm->handshake_state) {
 		case 0:
 		{
 			/* send request to wiimote for accelerometer calibration */
-			byte* buf;
+			uint8_t* buf;
 
 			WIIMOTE_ENABLE_STATE(wm, WIIMOTE_STATE_HANDSHAKE);
 			wiic_set_leds(wm, WIIMOTE_LED_NONE);
 
-			buf = (byte*)malloc(sizeof(byte) * 8);
+			buf = (uint8_t*)malloc(sizeof(uint8_t) * 8);
 			wiic_read_data_cb(wm, wiic_handshake, buf, WM_MEM_OFFSET_CALIBRATION, 7);
 			wm->handshake_state++;
 

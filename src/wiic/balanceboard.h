@@ -39,11 +39,11 @@
 extern "C" {
 #endif
 
-int balance_board_handshake(struct wiimote_t* wm, struct balance_board_t* bb, byte* data, unsigned short len);
+int balance_board_handshake(struct wiimote_t* wm, struct balance_board_t* bb, uint8_t* data, unsigned short len);
 
 void balance_board_disconnected(struct balance_board_t* bb);
 
-void balance_board_event(struct balance_board_t* bb, byte* msg);
+void balance_board_event(struct balance_board_t* bb, uint8_t* msg);
 
 #ifdef __cplusplus
 }

@@ -56,7 +56,7 @@ static void guitar_hero_3_pressed_buttons(struct guitar_hero_3_t* gh3, short now
  *
  *	@return	Returns 1 if handshake was successful, 0 if not.
  */
-int guitar_hero_3_handshake(struct wiimote_t* wm, struct guitar_hero_3_t* gh3, byte* data, unsigned short len) {
+int guitar_hero_3_handshake(struct wiimote_t* wm, struct guitar_hero_3_t* gh3, uint8_t* data, unsigned short len) {
 	int i;
 	int offset = 0;
 
@@ -88,7 +88,7 @@ int guitar_hero_3_handshake(struct wiimote_t* wm, struct guitar_hero_3_t* gh3, b
 		 */
 		if (data[offset + 16] == 0xFF) {
 			/* get the calibration data */
-			byte* handshake_buf = malloc(EXP_HANDSHAKE_LEN * sizeof(byte));
+			uint8_t* handshake_buf = malloc(EXP_HANDSHAKE_LEN * sizeof(uint8_t));
 
 			WIIC_DEBUG("Guitar Hero 3 handshake appears invalid, trying again.");
 			wiic_read_data_cb(wm, handshake_expansion, handshake_buf, WM_EXP_MEM_CALIBR, EXP_HANDSHAKE_LEN);
@@ -130,7 +130,7 @@ void guitar_hero_3_disconnected(struct guitar_hero_3_t* gh3) {
  *	@param cc		A pointer to a classic_ctrl_t structure.
  *	@param msg		The message specified in the event packet.
  */
-void guitar_hero_3_event(struct guitar_hero_3_t* gh3, byte* msg) {
+void guitar_hero_3_event(struct guitar_hero_3_t* gh3, uint8_t* msg) {
 	int i;
 
 	/* decrypt data */

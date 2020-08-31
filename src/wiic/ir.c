@@ -59,7 +59,7 @@ static void ir_convert_to_vres(int* x, int* y, enum aspect_t aspect, int vx, int
  *	@param status	1 to enable, 0 to disable.
  */
 void wiic_set_ir(struct wiimote_t* wm, int status) {
-	byte buf;
+	uint8_t buf;
 	char* block1 = NULL;
 	char* block2 = NULL;
 	int ir_level;
@@ -119,8 +119,8 @@ void wiic_set_ir(struct wiimote_t* wm, int status) {
 	usleep(50000);
 
 	/* write sensitivity blocks */
-	wiic_write_data(wm, WM_REG_IR_BLOCK1, (byte*)block1, 9);
-	wiic_write_data(wm, WM_REG_IR_BLOCK2, (byte*)block2, 2);
+	wiic_write_data(wm, WM_REG_IR_BLOCK1, (uint8_t*)block1, 9);
+	wiic_write_data(wm, WM_REG_IR_BLOCK2, (uint8_t*)block2, 2);
 
 	/* set the IR mode */
 	if (WIIMOTE_IS_SET(wm, WIIMOTE_STATE_EXP))
@@ -301,8 +301,8 @@ void wiic_set_ir_sensitivity(struct wiimote_t* wm, int level) {
 	/* set the new sensitivity */
 	get_ir_sens(wm, &block1, &block2);
 
-	wiic_write_data(wm, WM_REG_IR_BLOCK1, (byte*)block1, 9);
-	wiic_write_data(wm, WM_REG_IR_BLOCK2, (byte*)block2, 2);
+	wiic_write_data(wm, WM_REG_IR_BLOCK1, (uint8_t*)block1, 9);
+	wiic_write_data(wm, WM_REG_IR_BLOCK2, (uint8_t*)block2, 2);
 
 	WIIC_DEBUG("Set IR sensitivity to level %i (unid %i)", level, wm->unid);
 }
@@ -314,7 +314,7 @@ void wiic_set_ir_sensitivity(struct wiimote_t* wm, int level) {
  *	@param wm		Pointer to a wiimote_t structure.
  *	@param data		Data returned by the wiimote for the IR spots.
  */
-void calculate_basic_ir(struct wiimote_t* wm, byte* data) {
+void calculate_basic_ir(struct wiimote_t* wm, uint8_t* data) {
 	struct ir_dot_t* dot = wm->ir.dot;
 	int i;
 
@@ -350,7 +350,7 @@ void calculate_basic_ir(struct wiimote_t* wm, byte* data) {
  *	@param wm		Pointer to a wiimote_t structure.
  *	@param data		Data returned by the wiimote for the IR spots.
  */
-void calculate_extended_ir(struct wiimote_t* wm, byte* data) {
+void calculate_extended_ir(struct wiimote_t* wm, uint8_t* data) {
 	struct ir_dot_t* dot = wm->ir.dot;
 	int i;
 

@@ -222,8 +222,8 @@ extern "C" {
 /* not part of the api */
 int wiic_set_report_type(struct wiimote_t* wm);
 void wiic_send_next_pending_read_request(struct wiimote_t* wm);
-int wiic_send(struct wiimote_t* wm, byte report_type, byte* msg, int len);
-int wiic_read_data_cb(struct wiimote_t* wm, wiic_read_cb read_cb, byte* buffer, unsigned int offset, unsigned short len);
+int wiic_send(struct wiimote_t* wm, uint8_t report_type, uint8_t* msg, int len);
+int wiic_read_data_cb(struct wiimote_t* wm, wiic_read_cb read_cb, uint8_t* buffer, unsigned int offset, unsigned short len);
 
 #ifdef __cplusplus
 }

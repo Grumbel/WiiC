@@ -46,7 +46,7 @@ void wiic_set_speaker(struct wiimote_t* wm, int status) {
 		WIIMOTE_ENABLE_STATE(wm, WIIMOTE_STATE_SPEAKER);
 		WIIMOTE_ENABLE_STATE(wm, WIIMOTE_STATE_SPEAKER_MUTE);
 		
-		byte buf;
+		uint8_t buf;
 		  
 		/* Initialization Protocol */
 	
@@ -106,7 +106,7 @@ void wiic_set_speaker(struct wiimote_t* wm, int status) {
 		WIIMOTE_DISABLE_STATE(wm, WIIMOTE_STATE_SPEAKER);
 		WIIMOTE_DISABLE_STATE(wm, WIIMOTE_STATE_SPEAKER_MUTE);
 		WIIC_DEBUG("Speaker disabled");
-		byte buf = 0x00;
+		uint8_t buf = 0x00;
 		wiic_send(wm, WM_CMD_SPEAKER_ENABLE, &buf, 1);
 	}
 
@@ -127,7 +127,7 @@ void wiic_mute_speaker(struct wiimote_t* wm, int status) {
 			
 		WIIMOTE_ENABLE_STATE(wm, WIIMOTE_STATE_SPEAKER_MUTE);
 		WIIC_DEBUG("Speaker unmuted");
-		byte buf = 0x00;
+		uint8_t buf = 0x00;
 		wiic_send(wm, WM_CMD_SPEAKER_MUTE, &buf, 1);
 	} 	
     else {
@@ -137,7 +137,7 @@ void wiic_mute_speaker(struct wiimote_t* wm, int status) {
 			
 		WIIMOTE_DISABLE_STATE(wm, WIIMOTE_STATE_SPEAKER_MUTE);
 		WIIC_DEBUG("Speaker muted");
-		byte buf = 0x04;
+		uint8_t buf = 0x04;
 		wiic_send(wm, WM_CMD_SPEAKER_MUTE, &buf, 1);
 	}
 }

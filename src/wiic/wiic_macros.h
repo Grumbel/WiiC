@@ -213,10 +213,6 @@
 #define WIIC_USING_MOTION_PLUS(wm)	((wm->state & WIIMOTE_STATE_MOTION_PLUS) == WIIMOTE_STATE_MOTION_PLUS)
 #define WIIC_IS_LED_SET(wm, num)		((wm->leds & WIIMOTE_LED_##num) == WIIMOTE_LED_##num)
 
-/** TYPEDEFS */
-typedef unsigned char byte;
-typedef char sbyte;
-
 /**
  *      @brief Callback that handles a read event.
  *
@@ -231,7 +227,7 @@ typedef char sbyte;
  *      call to wiiuse_read_data().
  */
 struct wiimote_t;
-typedef void (*wiic_read_cb)(struct wiimote_t* wm, byte* data, unsigned short len);
+typedef void (*wiic_read_cb)(struct wiimote_t* wm, uint8_t* data, unsigned short len);
 
 /**
  *	@enum aspect_t

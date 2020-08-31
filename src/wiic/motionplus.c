@@ -87,7 +87,7 @@ void calculate_gyro_rates(struct motion_plus_t* mp, struct ang3s_t* in, struct a
  *	@param mp		A pointer to a motionplus_t structure.
  *	@param msg		The message specified in the event packet.
  */
-void motion_plus_event(struct motion_plus_t* mp, byte* msg) 
+void motion_plus_event(struct motion_plus_t* mp, uint8_t* msg) 
 {
 	// Check if the gyroscope is in fast or slow mode (0 if rotating fast, 1 if slow or still)
 	mp->acc_mode = ((msg[4] & 0x2) << 1) | ((msg[3] & 0x1) << 1) | ((msg[3] & 0x2) >> 1); 
@@ -139,7 +139,7 @@ void motion_plus_apply_smoothing(struct motion_plus_t *mp)
  *
  *	@return	Returns 1 if handshake was successful, 0 if not.
  */
-void motion_plus_handshake(struct wiimote_t* wm, byte* data, unsigned short len)
+void motion_plus_handshake(struct wiimote_t* wm, uint8_t* data, unsigned short len)
 {
 	WIIMOTE_DISABLE_STATE(wm, WIIMOTE_STATE_EXP);
 	WIIMOTE_DISABLE_STATE(wm, WIIMOTE_STATE_EXP_FAILED);
@@ -190,9 +190,9 @@ void motion_plus_handshake(struct wiimote_t* wm, byte* data, unsigned short len)
  */
 void wiic_set_motion_plus(struct wiimote_t *wm, int status)
 {
-	byte val;
-	byte* buf = 0;
-	byte* tmp = 0;
+	uint8_t val;
+	uint8_t* buf = 0;
+	uint8_t* tmp = 0;
 
 	// If we're handshaking other expansions, than skip this
 	if(WIIMOTE_IS_SET(wm,WIIMOTE_STATE_EXP_HANDSHAKE))
@@ -211,7 +211,7 @@ void wiic_set_motion_plus(struct wiimote_t *wm, int status)
 		usleep(10000);
 
 		// Callback to check if the init process performed right
-		tmp = (byte*)malloc(sizeof(byte)*6);
+		tmp = (uint8_t*)malloc(sizeof(uint8_t)*6);
 		wiic_read_data_cb(wm, motion_plus_handshake, tmp, WM_MOTION_PLUS_ID_ADDR, 6);
 	}
 	else {

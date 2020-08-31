@@ -46,8 +46,8 @@
 extern "C" {
 #endif
 
-void calculate_basic_ir(struct wiimote_t* wm, byte* data);
-void calculate_extended_ir(struct wiimote_t* wm, byte* data);
+void calculate_basic_ir(struct wiimote_t* wm, uint8_t* data);
+void calculate_extended_ir(struct wiimote_t* wm, uint8_t* data);
 float calc_yaw(struct ir_t* ir);
 
 #ifdef __cplusplus

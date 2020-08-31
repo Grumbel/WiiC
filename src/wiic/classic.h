@@ -43,11 +43,11 @@
 extern "C" {
 #endif
 
-int classic_ctrl_handshake(struct wiimote_t* wm, struct classic_ctrl_t* cc, byte* data, unsigned short len);
+int classic_ctrl_handshake(struct wiimote_t* wm, struct classic_ctrl_t* cc, uint8_t* data, unsigned short len);
 
 void classic_ctrl_disconnected(struct classic_ctrl_t* cc);
 
-void classic_ctrl_event(struct classic_ctrl_t* cc, byte* msg);
+void classic_ctrl_event(struct classic_ctrl_t* cc, uint8_t* msg);
 
 #ifdef __cplusplus
 }

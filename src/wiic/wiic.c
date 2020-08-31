@@ -208,7 +208,7 @@ void wiic_disconnected(struct wiimote_t* wm) {
  *	@param status	1 to enable, 0 to disable.
  */
 void wiic_rumble(struct wiimote_t* wm, int status) {
-	byte buf;
+	uint8_t buf;
 
 	if (!wm || !WIIMOTE_IS_CONNECTED(wm))
 		return;
@@ -253,7 +253,7 @@ void wiic_toggle_rumble(struct wiimote_t* wm) {
  *	\a leds is a bitwise or of WIIMOTE_LED_1, WIIMOTE_LED_2, WIIMOTE_LED_3, or WIIMOTE_LED_4.
  */
 void wiic_set_leds(struct wiimote_t* wm, int leds) {
-	byte buf;
+	uint8_t buf;
 
 	if (!wm || !WIIMOTE_IS_CONNECTED(wm)) 
 		return;
@@ -299,7 +299,7 @@ void wiic_motion_sensing(struct wiimote_t* wm, int status) {
  *	the current state of the device.
  */
 int wiic_set_report_type(struct wiimote_t* wm) {
-	byte buf[2];
+	uint8_t buf[2];
 	int motion, exp, ir;
 
 	if (!wm || !WIIMOTE_IS_CONNECTED(wm))
@@ -348,7 +348,7 @@ int wiic_set_report_type(struct wiimote_t* wm) {
  *	to a pending list and be sent out when the previous
  *	finishes.
  */
-int wiic_read_data_cb(struct wiimote_t* wm, wiic_read_cb read_cb, byte* buffer, unsigned int addr, unsigned short len) {
+int wiic_read_data_cb(struct wiimote_t* wm, wiic_read_cb read_cb, uint8_t* buffer, unsigned int addr, unsigned short len) {
 	struct read_req_t* req;
 
 	if (!wm || !WIIMOTE_IS_CONNECTED(wm))
@@ -403,7 +403,7 @@ int wiic_read_data_cb(struct wiimote_t* wm, wiic_read_cb read_cb, byte* buffer, 
  *	to a pending list and be sent out when the previous
  *	finishes.
  */
-int wiic_read_data(struct wiimote_t* wm, byte* buffer, unsigned int addr, unsigned short len) {
+int wiic_read_data(struct wiimote_t* wm, uint8_t* buffer, unsigned int addr, unsigned short len) {
 	struct read_req_t* req;
 
 	if (!wm || !WIIMOTE_IS_CONNECTED(wm))
@@ -452,7 +452,7 @@ int wiic_read_data(struct wiimote_t* wm, byte* buffer, unsigned int addr, unsign
  *	This function is not part of the wiic API.
  */
 void wiic_send_next_pending_read_request(struct wiimote_t* wm) {
-	byte buf[6];
+	uint8_t buf[6];
 	struct read_req_t* req;
 
 	if (!wm || !WIIMOTE_IS_CONNECTED(wm))
@@ -484,7 +484,7 @@ void wiic_send_next_pending_read_request(struct wiimote_t* wm) {
  *	Controller status includes: battery level, LED status, expansions
  */
 void wiic_status(struct wiimote_t* wm) {
-	byte buf = 0;
+	uint8_t buf = 0;
 
 	if (!wm || !WIIMOTE_IS_CONNECTED(wm))
 		return;
@@ -524,8 +524,8 @@ struct wiimote_t* wiic_get_by_id(struct wiimote_t** wm, int wiimotes, int unid) 
  *	@param data			The data to be written to the memory location.
  *	@param len			The length of the block to be written.
  */
-int wiic_write_data(struct wiimote_t* wm, unsigned int addr, byte* data, byte len) {
-	byte buf[21] = {0};		/* the payload is always 23 */
+int wiic_write_data(struct wiimote_t* wm, unsigned int addr, uint8_t* data, uint8_t len) {
+	uint8_t buf[21] = {0};		/* the payload is always 23 */
 
 	if (!wm || !WIIMOTE_IS_CONNECTED(wm))
 		return 0;
@@ -548,7 +548,7 @@ int wiic_write_data(struct wiimote_t* wm, unsigned int addr, byte* data, byte le
 	*(int*)(buf) = BIG_ENDIAN_LONG(addr);
 
 	/* length */
-	*(byte*)(buf + 4) = len;
+	*(uint8_t*)(buf + 4) = len;
 
 	/* data */
 	memcpy(buf + 5, data, len);
@@ -568,8 +568,8 @@ int wiic_write_data(struct wiimote_t* wm, unsigned int addr, byte* data, byte le
  *
  *	This function should replace any write()s directly to the wiimote device.
  */
-int wiic_send(struct wiimote_t* wm, byte report_type, byte* msg, int len) {
-	byte buf[32];		/* no payload is better than this */
+int wiic_send(struct wiimote_t* wm, uint8_t report_type, uint8_t* msg, int len) {
+	uint8_t buf[32];		/* no payload is better than this */
 	int rumble = 0;
 
 	buf[0] = WM_SET_REPORT | WM_BT_OUTPUT;

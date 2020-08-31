@@ -39,7 +39,7 @@
  *
  *	@return	Returns 1 if handshake was successful, 0 if not.
  */
-int balance_board_handshake(struct wiimote_t* wm, struct balance_board_t* bb, byte* data, unsigned short len) 
+int balance_board_handshake(struct wiimote_t* wm, struct balance_board_t* bb, uint8_t* data, unsigned short len) 
 {
 	int offset = 4;
 	
@@ -73,7 +73,7 @@ int balance_board_handshake(struct wiimote_t* wm, struct balance_board_t* bb, by
 	 */
 	if (data[offset+offset] == 0xFF && data[offset+offset+16] == 0xFF) {
 		/* get the calibration data */
-		byte* handshake_buf = malloc(EXP_HANDSHAKE_LEN * sizeof(byte));
+		uint8_t* handshake_buf = malloc(EXP_HANDSHAKE_LEN * sizeof(uint8_t));
 
 		WIIC_DEBUG("Balance board handshake appears invalid, trying again.");
 		wiic_read_data_cb(wm, handshake_expansion, handshake_buf, WM_EXP_MEM_CALIBR, EXP_HANDSHAKE_LEN);
@@ -106,7 +106,7 @@ int balance_board_handshake(struct wiimote_t* wm, struct balance_board_t* bb, by
  *	@param bb		A pointer to a balance_board_t structure.
  *	@param msg		The message specified in the event packet.
  */
-void balance_board_event(struct balance_board_t* bb, byte* msg) 
+void balance_board_event(struct balance_board_t* bb, uint8_t* msg) 
 {
 	// Raw data
 	bb->pressure_raw_data.top_right = (msg[0] << 8) | msg[1];

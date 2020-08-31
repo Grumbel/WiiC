@@ -42,11 +42,11 @@
 extern "C" {
 #endif
 
-void motion_plus_handshake(struct wiimote_t* wm, byte* data, unsigned short len);
+void motion_plus_handshake(struct wiimote_t* wm, uint8_t* data, unsigned short len);
 
 void motion_plus_disconnected(struct motion_plus_t* mp);
 
-void motion_plus_event(struct motion_plus_t* mp, byte* msg);
+void motion_plus_event(struct motion_plus_t* mp, uint8_t* msg);
 
 void wiic_set_mp_threshold(struct wiimote_t* wm, int threshold);
 

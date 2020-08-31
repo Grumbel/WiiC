@@ -47,10 +47,10 @@
 extern "C" {
 #endif
 
-void wiic_handshake(struct wiimote_t* wm, byte* data, unsigned short len);
+void wiic_handshake(struct wiimote_t* wm, uint8_t* data, unsigned short len);
 
 int wiic_io_read(struct wiimote_t* wm);
-int wiic_io_write(struct wiimote_t* wm, byte* buf, int len);
+int wiic_io_write(struct wiimote_t* wm, uint8_t* buf, int len);
 
 #ifdef __cplusplus
 }

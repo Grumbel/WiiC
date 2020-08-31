@@ -90,8 +90,8 @@
 
 - (IOBluetoothL2CAPChannel *) openL2CAPChannelWithPSM:(BluetoothL2CAPPSM) psm device:(IOBluetoothDevice*) device delegate:(id) delegate;
 - (IOReturn) connectToWiimote:(wiimote*) wm;
-- (void) l2capChannelData:(IOBluetoothL2CAPChannel*) channel data:(byte *) data length:(NSUInteger) length;
-- (byte*) getNextMsg;
+- (void) l2capChannelData:(IOBluetoothL2CAPChannel*) channel data:(uint8_t *) data length:(NSUInteger) length;
+- (uint8_t*) getNextMsg;
 - (unsigned int) getMsgLength;
 - (void) deleteMsg;
 - (void) disconnected:(IOBluetoothUserNotification*) notification fromDevice:(IOBluetoothDevice*) device;

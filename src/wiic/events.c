@@ -60,10 +60,10 @@
 
 static void idle_cycle(struct wiimote_t* wm);
 void clear_dirty_reads(struct wiimote_t* wm);
-void propagate_event(struct wiimote_t* wm, byte event, byte* msg);
-static void event_data_read(struct wiimote_t* wm, byte* msg);
-static void event_status(struct wiimote_t* wm, byte* msg);
-static void handle_expansion(struct wiimote_t* wm, byte* msg);
+void propagate_event(struct wiimote_t* wm, uint8_t event, uint8_t* msg);
+static void event_data_read(struct wiimote_t* wm, uint8_t* msg);
+static void event_status(struct wiimote_t* wm, uint8_t* msg);
+static void handle_expansion(struct wiimote_t* wm, uint8_t* msg);
 
 static void save_state(struct wiimote_t* wm);
 static int state_changed(struct wiimote_t* wm);
@@ -247,7 +247,7 @@ void clear_dirty_reads(struct wiimote_t* wm) {
  *
  *	Pass the event to the registered event callback.
  */
-void propagate_event(struct wiimote_t* wm, byte event, byte* msg) {
+void propagate_event(struct wiimote_t* wm, uint8_t event, uint8_t* msg) {
 	wiic_update_timestamp(wm);
 	save_state(wm);
 
@@ -386,7 +386,7 @@ void propagate_event(struct wiimote_t* wm, byte event, byte* msg) {
  *	@param wm		Pointer to a wiimote_t structure.
  *	@param msg		The message specified in the event packet.
  */
-void wiic_pressed_buttons(struct wiimote_t* wm, byte* msg) {
+void wiic_pressed_buttons(struct wiimote_t* wm, uint8_t* msg) {
 	short now;
 
 	/* convert to big endian */
@@ -420,10 +420,10 @@ void wiic_pressed_buttons(struct wiimote_t* wm, byte* msg) {
  *	reassembled into one, then the registered callback function
  *	that handles data reads is invoked.
  */
-static void event_data_read(struct wiimote_t* wm, byte* msg) {
+static void event_data_read(struct wiimote_t* wm, uint8_t* msg) {
 	/* we must always assume the packet received is from the most recent request */
-	byte err;
-	byte len;
+	uint8_t err;
+	uint8_t len;
 	unsigned short offset;
 	struct read_req_t* req = wm->read_req;
 
@@ -527,7 +527,7 @@ static void event_data_read(struct wiimote_t* wm, byte* msg) {
  *
  *	Read the controller status and execute the registered status callback.
  */
-static void event_status(struct wiimote_t* wm, byte* msg) {
+static void event_status(struct wiimote_t* wm, uint8_t* msg) {
 	int led[4] = {0};
 	int attachment = 0;
 	int ir = 0;
@@ -597,7 +597,7 @@ static void event_status(struct wiimote_t* wm, byte* msg) {
  *	@param wm		A pointer to a wiimote_t structure.
  *	@param msg		The message specified in the event packet for the expansion.
  */
-static void handle_expansion(struct wiimote_t* wm, byte* msg) {
+static void handle_expansion(struct wiimote_t* wm, uint8_t* msg) {
 	switch (wm->exp.type) {
 		case EXP_NUNCHUK:
 			nunchuk_event(&wm->exp.nunchuk, msg);
@@ -633,15 +633,15 @@ static void handle_expansion(struct wiimote_t* wm, byte* msg) {
  *	If the data is NULL then this function will try to start
  *	a handshake with the expansion.
  */
-void handshake_expansion(struct wiimote_t* wm, byte* data, unsigned short len) {
+void handshake_expansion(struct wiimote_t* wm, uint8_t* data, unsigned short len) {
 	int id;
 
 	if (!data) {
 		if(WIIMOTE_IS_SET(wm, WIIMOTE_STATE_EXP) || WIIMOTE_IS_SET(wm, WIIMOTE_STATE_EXP_FAILED) || WIIMOTE_IS_SET(wm, WIIMOTE_STATE_EXP_HANDSHAKE))
 			return;
 
-		byte* handshake_buf;
-		byte buf = 0x00;
+		uint8_t* handshake_buf;
+		uint8_t buf = 0x00;
 
 		if (WIIMOTE_IS_SET(wm, WIIMOTE_STATE_EXP))
 			disable_expansion(wm);
@@ -649,7 +649,7 @@ void handshake_expansion(struct wiimote_t* wm, byte* data, unsigned short len) {
 		wiic_write_data(wm, WM_EXP_MEM_ENABLE, &buf, 1);
 
 		/* get the calibration data */
-		handshake_buf = malloc(EXP_HANDSHAKE_LEN * sizeof(byte));
+		handshake_buf = malloc(EXP_HANDSHAKE_LEN * sizeof(uint8_t));
 		wiic_read_data_cb(wm, handshake_expansion, handshake_buf, WM_EXP_MEM_CALIBR, EXP_HANDSHAKE_LEN);
 
 		/* tell the wiimote to send expansion data */

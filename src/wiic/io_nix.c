@@ -333,7 +333,7 @@ int wiic_io_read(struct wiimote_t* wm) {
 }
 
 
-int wiic_io_write(struct wiimote_t* wm, byte* buf, int len) {
+int wiic_io_write(struct wiimote_t* wm, uint8_t* buf, int len) {
 	return write(wm->out_sock, buf, len);
 }
 

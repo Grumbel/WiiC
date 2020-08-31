@@ -44,7 +44,7 @@
 #include "events.h"
 #include "nunchuk.h"
 
-static void nunchuk_pressed_buttons(struct nunchuk_t* nc, byte now);
+static void nunchuk_pressed_buttons(struct nunchuk_t* nc, uint8_t now);
 
 /**
  *	@brief Handle the handshake data from the nunchuk.
@@ -55,7 +55,7 @@ static void nunchuk_pressed_buttons(struct nunchuk_t* nc, byte now);
  *
  *	@return	Returns 1 if handshake was successful, 0 if not.
  */
-int nunchuk_handshake(struct wiimote_t* wm, struct nunchuk_t* nc, byte* data, unsigned short len) {
+int nunchuk_handshake(struct wiimote_t* wm, struct nunchuk_t* nc, uint8_t* data, unsigned short len) {
 	int i;
 	int offset = 0;
 
@@ -84,7 +84,7 @@ int nunchuk_handshake(struct wiimote_t* wm, struct nunchuk_t* nc, byte* data, un
 		 */
 		if (data[offset + 16] == 0xFF) {
 			/* get the calibration data */
-			byte* handshake_buf = malloc(EXP_HANDSHAKE_LEN * sizeof(byte));
+			uint8_t* handshake_buf = malloc(EXP_HANDSHAKE_LEN * sizeof(uint8_t));
 
 			WIIC_DEBUG("Nunchuk handshake appears invalid, trying again.");
 			wiic_read_data_cb(wm, handshake_expansion, handshake_buf, WM_EXP_MEM_CALIBR, EXP_HANDSHAKE_LEN);
@@ -135,7 +135,7 @@ void nunchuk_disconnected(struct nunchuk_t* nc) {
  *	@param nc		A pointer to a nunchuk_t structure.
  *	@param msg		The message specified in the event packet.
  */
-void nunchuk_event(struct nunchuk_t* nc, byte* msg) {
+void nunchuk_event(struct nunchuk_t* nc, uint8_t* msg) {
 	int i;
 
 	/* decrypt data */
@@ -164,7 +164,7 @@ void nunchuk_event(struct nunchuk_t* nc, byte* msg) {
  *	@param nc		Pointer to a nunchuk_t structure.
  *	@param msg		The message byte specified in the event packet.
  */
-static void nunchuk_pressed_buttons(struct nunchuk_t* nc, byte now) {
+static void nunchuk_pressed_buttons(struct nunchuk_t* nc, uint8_t now) {
 	/* message is inverted (0 is active, 1 is inactive) */
 	now = ~now & NUNCHUK_BUTTON_ALL;
 

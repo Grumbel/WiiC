@@ -48,11 +48,11 @@ struct gforce_t;
  */
 struct read_req_t {
 	wiic_read_cb cb;			/**< read data callback											*/
-	byte* buf;					/**< buffer where read data is written							*/
+	uint8_t* buf;					/**< buffer where read data is written							*/
 	unsigned int addr;			/**< the offset that the read started at						*/
 	unsigned short size;		/**< the length of the data read								*/
 	unsigned short wait;		/**< num bytes still needed to finish read						*/
-	byte dirty;					/**< set to 1 if not using callback and needs to be cleaned up	*/
+	uint8_t dirty;					/**< set to 1 if not using callback and needs to be cleaned up	*/
 
 	struct read_req_t* next;	/**< next read request in the queue								*/
 };
@@ -64,7 +64,7 @@ struct read_req_t {
  *	@brief Unsigned x,y byte vector.
  */
 typedef struct vec2b_t {
-	byte x, y;
+	uint8_t x, y;
 } vec2b_t;
 
 
@@ -73,7 +73,7 @@ typedef struct vec2b_t {
  *	@brief Unsigned x,y,z byte vector.
  */
 typedef struct vec3b_t {
-	byte x, y, z;
+	uint8_t x, y, z;
 } vec3b_t;
 
 /**
@@ -193,7 +193,7 @@ typedef enum ir_position_t {
  *	@brief A single IR source.
  */
 typedef struct ir_dot_t {
-	byte visible;					/**< if the IR source is visible		*/
+	uint8_t visible;					/**< if the IR source is visible		*/
 
 	unsigned int x;					/**< interpolated X coordinate			*/
 	unsigned int y;					/**< interpolated Y coordinate			*/
@@ -201,9 +201,9 @@ typedef struct ir_dot_t {
 	short rx;						/**< raw X coordinate (0-1023)			*/
 	short ry;						/**< raw Y coordinate (0-767)			*/
 
-	byte order;						/**< increasing order by x-axis value	*/
+	uint8_t order;						/**< increasing order by x-axis value	*/
 
-	byte size;						/**< size of the IR dot (0-15)			*/
+	uint8_t size;						/**< size of the IR dot (0-15)			*/
 } ir_dot_t;
 
 
@@ -213,7 +213,7 @@ typedef struct ir_dot_t {
  */
 typedef struct ir_t {
 	struct ir_dot_t dot[4];			/**< IR dots							*/
-	byte num_dots;					/**< number of dots at this time		*/
+	uint8_t num_dots;					/**< number of dots at this time		*/
 
 	enum aspect_t aspect;			/**< aspect ratio of the screen			*/
 
@@ -269,9 +269,9 @@ typedef struct nunchuk_t {
 
 	int* flags;						/**< options flag (points to wiimote_t.flags) */
 
-	byte btns;						/**< what buttons have just been pressed	*/
-	byte btns_held;					/**< what buttons are being held down		*/
-	byte btns_released;				/**< what buttons were just released this	*/
+	uint8_t btns;						/**< what buttons have just been pressed	*/
+	uint8_t btns_held;					/**< what buttons are being held down		*/
+	uint8_t btns_released;				/**< what buttons were just released this	*/
 
 	float orient_threshold;			/**< threshold for orient to generate an event */
 	int accel_threshold;			/**< threshold for accel to generate an event */
@@ -338,7 +338,7 @@ typedef struct motion_plus_t {
 	struct ang3f_t a_gyro_rate;		/**< current gyro angle rate (unsmoothed) */
 	struct ang3f_t gyro_rate;		/**< current gyro angle rate (smoothed, if enabled) */
 	struct orient_t orient;				/**< current orientation on each axis using Motion Plus gyroscopes */
-	byte acc_mode;						/**< Fast/slow rotation mode for roll, pitch and yaw (0 if rotating fast, 1 if slow or still) */
+	uint8_t acc_mode;						/**< Fast/slow rotation mode for roll, pitch and yaw (0 if rotating fast, 1 if slow or still) */
 	int raw_gyro_threshold;			/**< threshold for gyroscopes to generate an event */
 	int smooth;					/**< smoothing enabled/disabled */
 	float smooth_alpha;				/**< smoothness alpha parameter*/
@@ -379,7 +379,7 @@ typedef struct wiimote_state_t {
 	float exp_l_shoulder;
 	
 	/* motion_plus_t */
-	byte mp_acc_mode;
+	uint8_t mp_acc_mode;
 	struct ang3s_t mp_raw_gyro;
 	
 	/* balance_board_t */
@@ -446,9 +446,9 @@ typedef struct wiimote_t {
 	WCONST int state;						/**< various state flags					*/
 	WCONST int flags;						/**< options flag							*/
 	WCONST int autoreconnect;				/**< auto-reconnect the device in case of unexpected disconnection */
-	WCONST byte handshake_state;			/**< the state of the connection handshake	*/
+	WCONST uint8_t handshake_state;			/**< the state of the connection handshake	*/
 	
-	WCONST byte leds;						/**< currently lit leds						*/
+	WCONST uint8_t leds;						/**< currently lit leds						*/
 	WCONST float battery_level;				/**< battery level							*/
 
 	WCONST struct read_req_t* read_req;		/**< list of data read requests				*/
@@ -468,7 +468,7 @@ typedef struct wiimote_t {
 	WCONST unsigned short btns_released;	/**< what buttons were just released this	*/
 
 	WCONST WIIC_EVENT_TYPE event;			/**< type of event that occured				*/
-	WCONST byte event_buf[MAX_PAYLOAD];		/**< event buffer							*/
+	WCONST uint8_t event_buf[MAX_PAYLOAD];		/**< event buffer							*/
 	
 	struct timeval timestamp; 				/**< Absolute timestamp (relative to the most recent data) */
 } wiimote;
